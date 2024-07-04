@@ -1,0 +1,36 @@
+{
+  "name": "die-post-challenge",
+  "version": "1.0.0",
+  "description": "A search input field with a typeahead dropdown showing suggestions for names of cocktails. Resources",
+  "author": "Tiago França",
+  "license": "MIT",
+  "private": true,
+  "gitHooks": {
+    "pre-commit": "npm run check"
+  },
+  "scripts": {
+    "css": "sass src/styles.scss dist/styles.css",
+    "build": "tsc",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "lint": "eslint . --ext .js,.ts --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .js,.ts --fix --ignore-path .gitignore",
+    "test": "jest --coverage --passWithNoTests",
+    "reset": "rm -rf node_modules package-lock.json dist",
+    "start": "npm run css; npm run build;",
+    "setup": "npm run reset; npm i; npm run start;",
+    "check": "npm run prettier; npm run lint; npm run test;",
+    "check:fix": "npm run prettier:fix; npm run lint:fix; npm run test;"
+  },
+  "devDependencies": {
+    "eslint": "8.57.0",
+    "jest": "29.7.0",
+    "prettier": "3.3.2",
+    "sass": "1.77.6",
+    "typescript": "5.5.3"
+  },
+  "engines": {
+    "node": "^20",
+    "npm": "^9 || ^10"
+  }
+}
