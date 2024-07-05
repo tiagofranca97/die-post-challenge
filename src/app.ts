@@ -125,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (event.key === 'Enter') {
+      if (!suggestions?.childElementCount) return;
+
       const elementId = suggestions.children[keyboardIndex]?.id;
       const drink = allDrinks.filter((item) => item.idDrink === elementId)?.[0] ?? {};
       triggerSelection(document.getElementById(elementId) as HTMLLIElement, drink);
@@ -136,6 +138,7 @@ function triggerKeyboardAction(isArrowDown: boolean): void {
   if (isArrowDown) keyboardIndex++;
   else keyboardIndex--;
 
+  resetKeyboardSelection();
   suggestions?.children[keyboardIndex]?.classList.add('keyboard-action');
   suggestions?.children[keyboardIndex]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
@@ -150,10 +153,8 @@ function buildSuggestions(drinks: Drink[], query?: string): void {
     suggestions.appendChild(createOption(drink, query));
   }
 
-  // After any suggestion list's update, it shows the list
-  if (suggestions.childElementCount) {
-    toggleSuggestions('open');
-  }
+  // After any suggestion list's update, it also updates its visibility
+  toggleSuggestions(suggestions?.childElementCount ? 'open' : 'close');
 }
 
 function createOption(drink: Drink, query?: string): HTMLLIElement {
@@ -215,6 +216,9 @@ function createThumb(drink: Drink): HTMLImageElement {
 function toggleSuggestions(className: string): void {
   suggestions?.classList.remove(...suggestions.classList);
   suggestions?.classList.add(className);
+
+  // For the case when the user uses the arrow keys but selects a suggestion with the mouse click
+  if (className === 'close') resetKeyboardSelection();
 }
 
 function resetSelection(): void {
@@ -226,6 +230,12 @@ function resetSelection(): void {
 function resetSuggestions(): void {
   suggestions.innerHTML = '';
   keyboardIndex = -1;
+}
+
+function resetKeyboardSelection(): void {
+  for (const item of suggestions.children) {
+    item.classList.remove('keyboard-action');
+  }
 }
 
 function resetInstructions(): void {
