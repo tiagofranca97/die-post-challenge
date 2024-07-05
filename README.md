@@ -16,4 +16,4 @@ Also, to check for format & linting issues and unit tests, you can run `npm run 
 
 ### Running Locally
 
-I used the extension VS Code's extension [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). It's just opening the `index.html` file (inside the **src** folder) with the extension.
+I used VS Code's extension [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). It's just opening the `index.html` file (on the ROOT) with the extension.
