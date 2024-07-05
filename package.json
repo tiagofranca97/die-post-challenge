@@ -23,6 +23,7 @@
     "check:fix": "npm run prettier:fix; npm run lint:fix; npm run test;"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "7.15.0",
     "eslint": "8.57.0",
     "jest": "29.7.0",
     "prettier": "3.3.2",
