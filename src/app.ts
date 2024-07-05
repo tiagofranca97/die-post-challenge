@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   input.addEventListener('keydown', (event) => {
     event.stopPropagation();
     if (event.key === 'ArrowDown') {
-      if (keyboardIndex < suggestions.childElementCount - 1) {
+      if (keyboardIndex < suggestions?.childElementCount - 1) {
         triggerKeyboardAction(true);
       }
     }
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (event.key === 'Enter') {
-      const elementId = suggestions.children[keyboardIndex].id;
+      const elementId = suggestions.children[keyboardIndex]?.id;
       const drink = allDrinks.filter((item) => item.idDrink === elementId)?.[0] ?? {};
       triggerSelection(document.getElementById(elementId) as HTMLLIElement, drink);
     }
@@ -136,16 +136,13 @@ function triggerKeyboardAction(isArrowDown: boolean): void {
   if (isArrowDown) keyboardIndex++;
   else keyboardIndex--;
 
-  for (const item of suggestions.children) {
-    item.classList.remove('keyboard-action');
-  }
-  suggestions.children[keyboardIndex].classList.add('keyboard-action');
-  suggestions.children[keyboardIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+  suggestions?.children[keyboardIndex]?.classList.add('keyboard-action');
+  suggestions?.children[keyboardIndex]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 function buildSuggestions(drinks: Drink[], query?: string): void {
   // Check if the array comes empty/null OR there are already suggestions and needs to be refreshed
-  if (!drinks?.length || suggestions.childElementCount) {
+  if (!drinks?.length || suggestions?.childElementCount) {
     resetSuggestions();
   }
 
@@ -192,7 +189,7 @@ function triggerSelection(el: HTMLLIElement, drink: Drink): void {
   // Need to override the index after selecting a suggestion because the first item is the chosen/default one
   keyboardIndex = 0;
   // This makes the selected suggestion to be the first in the list and focus it
-  el.parentNode?.insertBefore(el, suggestions.firstChild);
+  el.parentNode?.insertBefore(el, suggestions?.firstChild);
   el.focus();
   el.ariaSelected = 'true';
   input.value = drink?.strDrink;
@@ -204,8 +201,8 @@ function buildInstructions(drink: Drink): void {
   const description = document.createElement('p');
   description.textContent = drink?.strInstructions;
   instructions.innerHTML = '';
-  instructions.appendChild(description);
-  instructions.appendChild(createThumb(drink));
+  instructions?.appendChild(description);
+  instructions?.appendChild(createThumb(drink));
 }
 
 function createThumb(drink: Drink): HTMLImageElement {
@@ -216,8 +213,8 @@ function createThumb(drink: Drink): HTMLImageElement {
 }
 
 function toggleSuggestions(className: string): void {
-  suggestions.classList.remove(...suggestions.classList);
-  suggestions.classList.add(className);
+  suggestions?.classList.remove(...suggestions.classList);
+  suggestions?.classList.add(className);
 }
 
 function resetSelection(): void {
